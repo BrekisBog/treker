@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анти-Привычки - Борьба с вредными привычками</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Анти-Привычки</h1>
+            <p class="subtitle">Победи вредные привычки с помощью отслеживания и аналитики</p>
+            <nav>
+                <button class="nav-btn active" data-tab="habits">Мои вредные привычки</button>
+                <button class="nav-btn" data-tab="analytics">Аналитика борьбы</button>
+                <button class="nav-btn" data-tab="add-habit">Добавить привычку</button>
+                <button class="nav-btn" data-tab="motivation">Советы по борьбе</button>
+            </nav>
+        </header>
+
+        <main>
+            <div id="habits" class="tab-content active">
+                <h2>Мои вредные привычки</h2>
+                <div id="habits-list" class="habits-grid"></div>
+            </div>
+
+            <div id="analytics" class="tab-content">
+                <h2>Аналитика борьбы</h2>
+                <div id="analytics-content">
+                    <div class="stats-grid" id="stats-grid"></div>
+                    <div class="chart-container">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div id="add-habit" class="tab-content">
+                <h2>Добавить вредную привычку</h2>
+                <form id="habit-form" class="habit-form">
+                    <div class="form-group">
+                        <label for="habit-name">Название вредной привычки:</label>
+                        <input type="text" id="habit-name" required placeholder="Например: Курение">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="habit-desc">Описание и последствия:</label>
+                        <textarea id="habit-desc" rows="3" placeholder="Опишите привычку и почему вы хотите от неё избавиться..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="motivation-text">Мотивация для борьбы:</label>
+                        <textarea id="motivation-text" rows="2" placeholder="Что вы получите, избавившись от этой привычки?"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="habit-frequency">Как часто проявляется:</label>
+                        <select id="habit-frequency" required>
+                            <option value="daily">Ежедневно</option>
+                            <option value="weekly">Несколько раз в неделю</option>
+                            <option value="monthly">Несколько раз в месяц</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="difficulty-level">Сложность отказа:</label>
+                        <select id="difficulty-level" required>
+                            <option value="hard">Очень сложно</option>
+                            <option value="medium" selected>Средне</option>
+                            <option value="easy">Легко</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Добавить для отслеживания</button>
+                </form>
+            </div>
+
+            <div id="motivation" class="tab-content">
+                <h2>Советы по борьбе с вредными привычками</h2>
+                <div class="motivation-tips">
+                    <h3>Эффективные стратегии:</h3>
+                    <ul>
+                        <li><strong>Определите триггеры</strong> - что вызывает желание вернуться к привычке?</li>
+                        <li><strong>Замените привычку</strong> - найдите здоровую альтернативу</li>
+                        <li><strong>Постепенное сокращение</strong> - не пытайтесь бросить сразу</li>
+                        <li><strong>Ведите дневник</strong> - отслеживайте прогресс и срывы</li>
+                        <li><strong>Награждайте себя</strong> - за каждый день без вредной привычки</li>
+                        <li><strong>Ищите поддержку</strong> - расскажите близким о своей цели</li>
+                        <li><strong>Избегайте искушений</strong> - уберите триггеры из окружения</li>
+                    </ul>
+                </div>
+
+                <div class="motivation-tips">
+                    <h3>Как использовать этот трекер:</h3>
+                    <ul>
+                        <li>Отмечайте каждый день, когда удалось избежать вредной привычки</li>
+                        <li>Записывайте уровень тяги - это поможет понять закономерности</li>
+                        <li>Анализируйте статистику - выявляйте самые сложные дни</li>
+                        <li>Ставьте маленькие цели - например, "3 дня без привычки"</li>
+                        <li>Не ругайте себя за срывы - это часть процесса</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="completion-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Отметить день борьбы</h3>
+            <form id="completion-form">
+                <input type="hidden" id="modal-habit-id">
+                <div class="form-group">
+                    <label for="completion-date">Дата:</label>
+                    <input type="date" id="completion-date" required>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="completed-checkbox" checked>
+                        Удалось избежать вредной привычки
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="craving-level">Уровень тяги (0-10):</label>
+                    <input type="range" id="craving-level" min="0" max="10" value="0">
+                    <div class="range-labels">
+                        <span>Слабая</span>
+                        <span>Сильная</span>
+                    </div>
+                    <div id="craving-value">0</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="resistance-level">Уровень сопротивления (0-10):</label>
+                    <input type="range" id="resistance-level" min="0" max="10" value="0">
+                    <div class="range-labels">
+                        <span>Слабое</span>
+                        <span>Сильное</span>
+                    </div>
+                    <div id="resistance-value">0</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="completion-notes">Заметки и наблюдения:</label>
+                    <textarea id="completion-notes" rows="3" placeholder="Что спровоцировало тягу? Как справились? Какие эмоции?"></textarea>
+                </div>
+
+                <button type="submit" class="btn-success">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
